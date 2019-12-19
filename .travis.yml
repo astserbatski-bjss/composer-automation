@@ -7,11 +7,6 @@ sudo: true
 branches:
   only:
     - master
-env:
-  global:
-    - GITHUB_API_KEY: c860558a42634fadd8aae2197396cfc03ce489f9
-    - GH_REF: github.com/astserbatski-bjss/composer-automation.git
-
 php:
   - 7.2
 
@@ -36,5 +31,5 @@ after_success:
   - git config user.email "travis@bjss.com"
   - git config user.name "travis"
   - git add composer.lock
-  - git commit --allow-empty -m "${TRAVIS_COMMIT} AUTO"
+  - git commit --allow-empty -m "${TRAVIS_COMMIT} ${COMMIT_MESSAGE_SLUG}"
   - git push --quiet https://astserbatski-bjss:${GITHUB_API_KEY}@${GH_REF} HEAD:master
