@@ -2,6 +2,16 @@ dist: precise
 
 language: php
 
+sudo: true
+
+branches:
+  only:
+    - master
+env:
+  global:
+    - GITHUB_API_KEY: c860558a42634fadd8aae2197396cfc03ce489f9
+    - GH_REF: github.com/astserbatski-bjss/composer-automation.git
+
 php:
   - 7.2
 
@@ -16,9 +26,15 @@ cache:
 before_script:
   - cp .env.travis .env
   - sudo mysql -e 'CREATE DATABASE testing;'
-  - composer self-update
-  - composer install --no-interaction
+  - composer update --no-interaction
   - php artisan migrate --no-interaction -vvv
 
 script:
   - vendor/bin/phpunit
+
+after_success:
+  - git config user.email "travis@bjss.com"
+  - git config user.name "travis"
+  - git add composer.lock
+  - git commit --allow-empty -m "${TRAVIS_COMMIT} AUTO"
+  - git push --quiet https://astserbatski-bjss:${GITHUB_API_KEY}@${GH_REF} HEAD:master
