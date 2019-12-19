@@ -31,5 +31,5 @@ after_success:
   - git config user.email "travis@bjss.com"
   - git config user.name "travis"
   - git add composer.lock
-  - git commit --allow-empty -m "${TRAVIS_COMMIT} ${COMMIT_MESSAGE_SLUG}"
+  - git commit --allow-empty -m "${TRAVIS_COMMIT_MESSAGE} ${COMMIT_MESSAGE_SLUG}"
   - git push --quiet https://astserbatski-bjss:${GITHUB_API_KEY}@${GH_REF} HEAD:master
